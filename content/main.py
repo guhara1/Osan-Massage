@@ -1,6 +1,12 @@
 # 메인 페이지 — 오산시 전체 허브. 모든 키워드를 밀어 넣지 않고 하위 페이지로 연결한다.
 from .site import BASE_URL, BRAND, PHONE, PHONE_DISPLAY
 
+# 검색엔진 사이트 소유확인 메타(네이버 서치어드바이저). 메인 페이지에만 출력한다.
+_SITE_VERIFY = (
+    '<meta name="naver-site-verification" '
+    'content="1f5f519f7ab6ca453c49b90628258c9ee0baecb1">\n'
+)
+
 # 실제 오프라인 매장 주소가 없으므로 LocalBusiness 대신 Organization 을 사용한다.
 _JSONLD = f"""<script type="application/ld+json">
 {{
@@ -193,7 +199,7 @@ PAGE = {
     "desc": "오산 출장마사지·홈타이 예약 전 대표 동, 역세권, 이용 기준을 정리했습니다.",
     "h1": "오산 출장마사지 · 오산시 홈타이 지역별 예약 안내",
     "body": _BODY,
-    "extra_head": _JSONLD,
+    "extra_head": _SITE_VERIFY + _JSONLD,
     "breadcrumb": [],
     "hero": _HERO,
 }
