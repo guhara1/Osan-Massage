@@ -73,9 +73,51 @@ python3 build.py
 
 ## 배포 전 해야 할 일
 
-1. `content/site.py`의 `BASE_URL`을 실제 도메인으로 변경
-2. `python3 build.py` 재실행 (canonical·sitemap·robots.txt에 반영됨)
+1. `content/site.py`의 `BASE_URL`을 실제 도메인으로 변경 (현재 `https://osan-massage.pages.dev`)
+2. `python3 build.py` 재실행 (canonical·sitemap·rss·robots.txt에 반영됨)
 3. Google Search Console / 네이버 서치어드바이저에 `sitemap.xml` 제출
+
+## 빠른 색인(인덱싱) 설정
+
+빌드 시 색인용 파일이 자동 생성됩니다.
+
+| 파일 | 용도 |
+|------|------|
+| `/sitemap.xml` | 구글·네이버 사이트맵 (lastmod·priority 포함) |
+| `/rss.xml` | RSS 피드 — 네이버·구글 발견 속도 향상 (head에 `alternate` 링크 자동 삽입) |
+| `/robots.txt` | 전체 허용 + Googlebot·Yeti(네이버)·bingbot 명시 + 사이트맵 |
+| `/{INDEXNOW_KEY}.txt` | IndexNow 소유확인 키 파일 (루트 공개) |
+
+### 1) IndexNow — 빙·네이버·얀덱스 즉시 통보 (구글 미참여)
+
+글/페이지를 새로 올리거나 수정하면:
+
+```bash
+python3 build.py                                   # 사이트 갱신
+python3 scripts/indexnow.py                        # sitemap 전체 통보
+python3 scripts/indexnow.py https://osan-massage.pages.dev/osan/won-dong-area-chuljangmassage/  # 특정 URL만
+```
+
+- IndexNow 키: `content/site.py`의 `INDEXNOW_KEY`. 키 파일 `/{KEY}.txt`가 **배포되어 공개 접근 가능**해야 통보가 검증됩니다.
+- 하나의 엔드포인트(api.indexnow.org)로 보내면 참여 엔진(빙·네이버·얀덱스·Seznam) 전체에 공유됩니다.
+
+### 2) 구글 Indexing API — 구글 즉시 통보 (선택)
+
+구글은 IndexNow에 참여하지 않습니다. 즉시 통보가 필요하면:
+
+```bash
+pip install google-auth requests
+export GOOGLE_APPLICATION_CREDENTIALS=/path/service-account.json
+python3 scripts/google_index.py                    # sitemap 전체
+python3 scripts/google_index.py https://osan-massage.pages.dev/...   # 특정 URL
+```
+
+준비: Google Cloud에서 Indexing API 활성화 → 서비스 계정 JSON 키 발급 → Search Console 속성에 서비스 계정 이메일을 **소유자**로 추가. (서비스 계정 JSON은 `.gitignore`로 커밋 차단됨)
+
+> 참고: 구글·빙의 **sitemap ping 엔드포인트는 2023년에 폐지**되어 더 이상 동작하지 않습니다.
+> 따라서 빠른 색인의 현실적 경로는 **IndexNow(빙·네이버) + 구글 Indexing API/Search Console + RSS**입니다.
+> 구글 Indexing API는 공식적으로 JobPosting·BroadcastEvent를 위한 것이라 일반 페이지엔 best-effort이며,
+> 정식 경로는 Search Console의 sitemap·RSS 제출입니다.
 
 ## OG 검색 썸네일 재생성
 
