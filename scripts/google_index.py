@@ -11,7 +11,7 @@
 준비:
   1) Google Cloud 프로젝트에서 "Indexing API" 활성화
   2) 서비스 계정 생성 → JSON 키 발급
-  3) Search Console 속성(https://osan-massage.pages.dev/)에 그 서비스 계정 이메일을
+  3) Search Console 속성(https://osan-massage.netlify.app/)에 그 서비스 계정 이메일을
      '소유자(Owner)' 로 추가
   4) pip install google-auth requests
 

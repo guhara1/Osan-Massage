@@ -1,0 +1,24 @@
+# Netlify 자동 배포 설정
+# GitHub 푸시 → 빌드 → 게시까지 자동으로 처리된다.
+
+[build]
+  # content/ 정의를 읽어 정적 HTML을 루트에 생성한다.
+  command = "python3 build.py"
+  # build.py 가 저장소 루트에 직접 생성하므로 publish 디렉터리는 루트.
+  publish = "."
+
+[build.environment]
+  # 외부 의존성 없이 표준 라이브러리만 사용. Python 3 명시.
+  PYTHON_VERSION = "3.12"
+
+# 정적 자산 캐시 (이미지·CSS·JS)
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# 존재하지 않는 경로는 404 페이지로
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404

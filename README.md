@@ -73,7 +73,7 @@ python3 build.py
 
 ## 배포 전 해야 할 일
 
-1. `content/site.py`의 `BASE_URL`을 실제 도메인으로 변경 (현재 `https://osan-massage.pages.dev`)
+1. `content/site.py`의 `BASE_URL`을 실제 도메인으로 변경 (현재 `https://osan-massage.netlify.app`)
 2. `python3 build.py` 재실행 (canonical·sitemap·rss·robots.txt에 반영됨)
 3. Google Search Console / 네이버 서치어드바이저에 `sitemap.xml` 제출
 
@@ -95,7 +95,7 @@ python3 build.py
 ```bash
 python3 build.py                                   # 사이트 갱신
 python3 scripts/indexnow.py                        # sitemap 전체 통보
-python3 scripts/indexnow.py https://osan-massage.pages.dev/osan/won-dong-area-chuljangmassage/  # 특정 URL만
+python3 scripts/indexnow.py https://osan-massage.netlify.app/osan/won-dong-area-chuljangmassage/  # 특정 URL만
 ```
 
 - IndexNow 키: `content/site.py`의 `INDEXNOW_KEY`. 키 파일 `/{KEY}.txt`가 **배포되어 공개 접근 가능**해야 통보가 검증됩니다.
@@ -109,7 +109,7 @@ python3 scripts/indexnow.py https://osan-massage.pages.dev/osan/won-dong-area-ch
 pip install google-auth requests
 export GOOGLE_APPLICATION_CREDENTIALS=/path/service-account.json
 python3 scripts/google_index.py                    # sitemap 전체
-python3 scripts/google_index.py https://osan-massage.pages.dev/...   # 특정 URL
+python3 scripts/google_index.py https://osan-massage.netlify.app/...   # 특정 URL
 ```
 
 준비: Google Cloud에서 Indexing API 활성화 → 서비스 계정 JSON 키 발급 → Search Console 속성에 서비스 계정 이메일을 **소유자**로 추가. (서비스 계정 JSON은 `.gitignore`로 커밋 차단됨)
