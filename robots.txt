@@ -10,4 +10,4 @@ Allow: /
 User-agent: bingbot
 Allow: /
 
-Sitemap: https://osan-massage.pages.dev/sitemap.xml
+Sitemap: https://osan-massage.netlify.app/sitemap.xml

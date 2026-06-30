@@ -10,7 +10,7 @@ IndexNow 는 하나의 엔드포인트에 보내면 참여 검색엔진 전체�
     python3 scripts/indexnow.py
 
     # 특정 URL 만 통보 (글/페이지 새로 올렸을 때)
-    python3 scripts/indexnow.py https://osan-massage.pages.dev/osan/won-dong-area-chuljangmassage/
+    python3 scripts/indexnow.py https://osan-massage.netlify.app/osan/won-dong-area-chuljangmassage/
 
 키 파일은 빌드 시 루트에 "{KEY}.txt" 로 게시된다(build.py). 사이트가 배포되어
 그 파일이 공개 접근 가능해야 통보가 검증된다.
